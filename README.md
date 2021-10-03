@@ -28,9 +28,18 @@ Agenda
 
 ### Ad 1. Wprowadzenie do CloudFront
 
-tba
+#### Integracje CF
 
-![](https://img.ifunny.co/images/77050e456e93a6bdadd2d3fd946eac39b30e1d3b1518c4b7f542cc41d8ff6eac_1.jpg)
+- [Amazon Lambda](https://aws.amazon.com/lambda/) umożliwia tzw. przetwarzanie bezserwerowe(serverless computing), uruchamianie kodu aplikacji bez konieczności samodzielnego zarządzania serwerem 
+- [Amazon Kinesis Data Streams](https://aws.amazon.com/kinesis/data-streams/) w połączeniu z CF umożliwia przetwarzanie logów w czasie rzeczywistym
+- [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) Monitoring. CF współpracuje z CW, emituje różnego rodzaju metryki.
+- [Amazon Route 53](https://aws.amazon.com/route53/)
+- [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/)
+- [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) umożliwia dodanie certyfikatu SSL do Dystrybucji CF i powiązanie go z nasza domeną.
+- [AWS Shield](https://aws.amazon.com/shield/)
+- [AWS Web Application Firewall (WAF)](https://aws.amazon.com/waf/)
+
+![](integracje-cf.png)
 
 #### Słowniczek
 
