@@ -17,12 +17,12 @@ Agenda
 ### Agenda
 
 1. [Wprowadzenie do CloudFront](#ad-1-wprowadzenie-do-cloudfront)
-1. [Amazon S3, o bucketach po krótce](#ad-2-amazon-s3-o-bucketach-po-krotce)
-1. [Lambda Edge Functions](#ad-3-generowanie-typ%C3%B3w-typescript-i-http-client-na-podstawie-swaggeroas-api)
-1. [Konfiguracja Dystrybucji CF](#ad-3-generowanie-typ%C3%B3w-typescript-i-http-client-na-podstawie-swaggeroas-api)
-1. [Przykładowe use-casy](#ad-4-codegen-generator-dla-graphql)
-1. [Demo, serwowanie assetów na przykładzie sitemap](#ad-6-tooling-jak-wspom%C3%B3c-si%C4%99-apkami-postman-i-altair)
-1. [Podsumowanie](#podsumowanie)
+1. [Amazon S3, o bucketach po krótce](#ad-2-amazon-s3-o-bucketach-po-kr%C3%B3tce)
+1. [Lambda Edge Functions](#ad-3-lambda-edge-functions)
+1. [Konfiguracja Dystrybucji CF](#ad-4-konfiguracja-dystrybucji-cf)
+1. [Przykładowe use-casy](#ad-5-przyk%C5%82adowe-use-casy)
+1. [Demo, serwowanie assetów na przykładzie sitemap](#ad-6-demo-serwowanie-asset%C3%B3w-na-przyk%C5%82adzie-sitemap)
+1. [Podsumowanie](#ad-7-podsumowanie)
    
 ----
 
