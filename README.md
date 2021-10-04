@@ -32,6 +32,10 @@ Czym jest CF wg dokumentacji w wolnym tłumaczeniu
 
 > Amazon CloudFront to rozproszony system dostarczania treści (CDN), która bezpiecznie dostarcza dane, filmy, aplikacje i interfejsy API klientom na całym świecie z niewielkimi opóźnieniami i wysokimi prędkościami transferu, a wszystko to w środowisku przyjaznym dla programistów.
 
+#### Ok, ale czym jest CDN?
+
+![](single-server-2.png)
+
 #### Integracje CF
 
 - [Amazon Lambda](https://aws.amazon.com/lambda/) umożliwia tzw. przetwarzanie bezserwerowe(serverless computing), uruchamianie kodu aplikacji bez konieczności samodzielnego zarządzania serwerem 
