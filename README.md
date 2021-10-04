@@ -28,6 +28,10 @@ Agenda
 
 ### Ad 1. Wprowadzenie do CloudFront
 
+Czym jest CF wg dokumentacji w wolnym tłumaczeniu
+
+> Amazon CloudFront to rozproszony system dostarczania treści (CDN), która bezpiecznie dostarcza dane, filmy, aplikacje i interfejsy API klientom na całym świecie z niewielkimi opóźnieniami i wysokimi prędkościami transferu, a wszystko to w środowisku przyjaznym dla programistów.
+
 #### Integracje CF
 
 - [Amazon Lambda](https://aws.amazon.com/lambda/) umożliwia tzw. przetwarzanie bezserwerowe(serverless computing), uruchamianie kodu aplikacji bez konieczności samodzielnego zarządzania serwerem 
@@ -41,19 +45,6 @@ Agenda
 
 ![](integracje-cf.png)
 
-#### Słowniczek
-
-- `NodeJS` - runtime JavaScript
-- `TypeScript` - typowany nadzbiór/superset/nadbudówka JS, który kompiluje się do czystego JS
-- `OAS` - Openapi Specification, kiedyś znana jako Swagger Specification, Standard dla RESTful Apis
-- `Swagger` - Zbiór narzędzi implementujących OAS (Parser, Editor, UI, Inspector, itd.)
-- `GraphQL` - GraphQL to w zasadzie query language, specyfikacja języka do implementacji serwerów API GraphQL.
-            Przykładowe implementacje: Apollo, Relay, Nexus, Yoga, Prisma.
-    - `Introspection` - samo/dokumentujące się API, automatyczna dostępność do docsów, podpowiedzi `control`+`space`, możliwość integracji z IDE
-    - `TypeGraphQL` - framework, umożliwia budowanie schemy, resolverów itd. w TypeScript
-- `ReactJS` - biblioteka FE do budowania UI
-- `MongoDB` - baza danych noSQL (nierelacyjna)
-    - `Mongoose` - narzędzie do modelowania baz MongoDB / ODM (Object Data Modeling)
 ----
 
 ### Ad 2. Amazon S3, o bucketach po krótce
@@ -77,36 +68,10 @@ Connection string powinien wyglądać mniej więcej tak:
 
 ### Ad 3. Lambda Edge Functions
 
-1. Dodajemy do projektu [swagger-typescript-api](https://github.com/acacode/swagger-typescript-api) 
-   jako dev dependency np. 
-```
-yarn add -D swagger-typescript-api
-```
+![](https://images.ctfassets.net/9gzi1io5uqx8/mdGKV0XGOGjyr23h3ExMP/99f70f024f70f9856af20e300aea7a03/cloudfront-function-and-lambda-edge-2.png?fit=scale&w=825)
 
-2. Tworzymy plik `swagger-api.js` w roocie projektu o zwartości
-
-```javascript
-const path = require('path');
-const { generateApi } = require('swagger-typescript-api');
-
-generateApi({
-    name: 'api.ts',
-    url: '<url swagger schema json>',
-    // input:  path.join(__dirname, 'schema.json'), // ewentualnie zamiast url lokalny plik schemy json, yml
-    output: path.join(__dirname, 'src'),
-    generateClient: true,
-}).catch((e) => console.error(e.message));
-```
-3. W package.json możemy dodać
-```json
-{
-  "scripts": {
-    "swagger:types": "node swagger-api.js"
-  }
-}
-```
-
-Za każdym razem kiedy zmieniany jest kontrakt z backendem powinniśmy wygenerować na nowo typy i klienta
+linki:
+- https://www.sentiatechblog.com/cloudfront-functions-and-lambda-edge-compared
 
 ----
 
@@ -213,6 +178,16 @@ i najlepiej radzi sobie `openapi-to-graphql`
 ----
 
 ### Ad. 7. Podsumowanie
+
+
+#### Dlaczego warto użyc CloudFront?
+
+- Szybkość i niezawodność w dostarczaniu treści do klientów
+- Bezpieczeństwo
+- Głęboka i łatwa integracja z ekosystemem AWS
+- Wygodna konfiguracja za pomocą API/SDK/narzędzi IaC np. Terraform, Serverless framework
+- Przetwarzanie żądań i odpowiedzi @Edge za pomocą kodu AWS Lambda Edge Functions, CloudFront Functions
+- Metryki i logi dostępne w czasie rzeczywistym
 
 #### Wady i zalety Generatorów
 
