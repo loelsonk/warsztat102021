@@ -34,6 +34,7 @@ Czym jest CF wg dokumentacji w wolnym tłumaczeniu
 
 #### Ok, ale czym jest CDN?
 
+![](single-server-1.png)
 ![](single-server-2.png)
 
 #### Integracje CF
