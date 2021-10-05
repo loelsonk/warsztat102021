@@ -28,20 +28,11 @@ Wszyscy są zadowoleni. Strona działa szybko bez opóźnień, hosting nie jest 
 
 Problem może się pojawić, kiedy strona zyska na popularności. Klienci z sąsiednich krajów czują opóźnienie ale mogą w miarę skutecznie poruszać się po stronie, natomiast w bardziej odległych zakątkach świata na wyświetlenie strony czekamy kilka sekund.
 
+Dlaczego tak się dzieje? Zanim nasze pakiety dotrą do serwera docelowego są one przekazywane przez wiele urządzeń sieciowych i sieci różnych operatorów internetowych. Każde takie przejście wprowadza pewne opóźnienia.
+
 ![](single-server-2.png)
 
 #### CDN/CloudFront rozwiązuje ten problem w taki oto sposób:
-
-Klienci łączą się do strony za pomocą węzłów, które są najbliżej nich. W efekcie strona działa szybko w każdym miejscu na ziemi.
-Skrócenie geograficznej drogi połączenia to tylko jedna z wielu technik jaką sieci CDN przyspieszają i usprawniają transmisję statycznych plików.
-
-![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-example.png)
-
-Czyli w uproszczeniu, ruch do serwera:
-
-No CDN: Zanim nasze pakiety dotrą do serwera docelowego są one przekazywane przez wiele urządzeń sieciowych i sieci różnych operatorów internetowych. Każde takie przejście wprowadza pewne opóźnienia.
-
-CDN (CloudFront):
 
 Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Location(Node/Edge Server), wtedy już ich dalszy transfer leci po sieci szkieletowej Amazonu. Dzięki czemu opóźnienia są minimalne.
 
