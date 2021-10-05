@@ -1,32 +1,15 @@
 ## AWS CloudFront w praktyce
 
-
-AWS CloudFront w praktyce
-
-Agenda
-1. Wprowadzenie do CloudFront
-2. Amazon S3, o bucketach po krótce
-3. Lambda Edge Functions
-4. Konfiguracja Dystrybucji CF
-5. Przykładowe use-casy
-6. Demo, serwowanie assetów na przykładzie sitemap
-7. Podsumowanie
-
-
+![](https://miro.medium.com/max/1400/0*5zpkNFoKi9tBRkKH.png)
 
 ### Agenda
 
 1. [Wprowadzenie do CloudFront](#ad-1-wprowadzenie-do-cloudfront)
-1. [Amazon S3, o bucketach po krótce](#ad-2-amazon-s3-o-bucketach-po-kr%C3%B3tce)
 1. [Lambda Edge Functions](#ad-3-lambda-edge-functions)
 1. [Konfiguracja Dystrybucji CF](#ad-4-konfiguracja-dystrybucji-cf)
 1. [Przykładowe use-casy](#ad-5-przyk%C5%82adowe-use-casy)
 1. [Demo, serwowanie assetów na przykładzie sitemap](#ad-6-demo-serwowanie-asset%C3%B3w-na-przyk%C5%82adzie-sitemap)
 1. [Podsumowanie](#ad-7-podsumowanie)
-   
-   
-   1. opowiedziec na wstepie, czym jest CF
-   2. dokładniej przedstawić problem
 ----
 
 ### Ad 1. Wprowadzenie do CloudFront
@@ -39,14 +22,27 @@ Czym jest CF wg dokumentacji w wolnym tłumaczeniu
 
 Załóżmy, że mamy stronę internetową zainstalowaną na polskim hostingu, np. może być to datacenter w Warszawie.
 
+![](single-server-1.png)
+
+Wszyscy są zadowoleni. Strona działa szybko bez opóźnień, hosting nie jest obciążony zapytaniami. 
+
+Problem może się pojawić, kiedy strona zyska na popularności. Klienci z sąsiednich krajów czują opóźnienie ale mogą w miarę skutecznie poruszać się po stronie, natomiast w bardziej odległych zakątkach świata na wyświetlenie strony czekamy kilka sekund.
+
+![](single-server-2.png)
+
+przeniesc do podsumowania
+
 - częste zapytania obciążające zasoby obliczeniowe, pamięciowe servera, bazy danych
 - spora odległość od klientów, długie czasy oczekiwania
 - może doprowadzić do strat wizerunkowych i finansowych związanych z niedotrzymaniem SLA, czyli Service Level Agreement – umowa o gwarantowanym poziomie świadczenia usług.
 
-![](single-server-1.png)
-![](single-server-2.png)
+#### CDN/CloudFront rozwiązuje ten problem w taki oto sposób:
 
-#### Ok, ale czym jest CDN?
+![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-example.png)
+*źródło https://gtmetrix.com*
+
+![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-region-specific.png)
+*źródło https://gtmetrix.com*
 
 #### Integracje CF
 
@@ -60,25 +56,6 @@ Załóżmy, że mamy stronę internetową zainstalowaną na polskim hostingu, np
 - [AWS Web Application Firewall (WAF)](https://aws.amazon.com/waf/)
 
 ![](integracje-cf.png)
-
-----
-
-### Ad 2. Amazon S3, o bucketach po krótce
-
-- Sandbox https://codesandbox.io/s/tsed-swagger-graphql-092021-g9n41
-- Potrzebujesz jedynie instancji bazy danych mongodb, darmową możesz założyć na https://www.mongodb.com/cloud (btw. mlab.com został przejęty przez mongodb.com)
-- Server stoi na frameworku TS.ED https://tsed.io
-- Server działa całkiem spoko w developmencie. W razie pytań to lojalnie informuję, że nie wykorzystywałem go nigdy produkcyjnie. Wypróbowałem go jedynie przy okazji realizacji tego warszatu.
-
-#### process.env.MONGO_URL
-W zakładce `Server Control Panel` ustawiamy zmienną środowiską `process.env.MONGO_URL`, aby wskazywała na connection string naszej bazy.
-Connection string powinien wyglądać mniej więcej tak:
-`mongodb+srv://<username>:<password>@<cluster-name>.<random-subdomain>.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
-
-![Jak dodać secret](images/add-secret.png "Jak dodać secret")
-
-#### Jak pobrać projekt
-![Jak exportować](images/how-to-export.png "Jak exportować")
 
 ----
 
@@ -148,13 +125,16 @@ linki:
 
 ### Ad 5. Przykładowe use-casy
 
-codesandbox aplikacji frontowej:
-https://codesandbox.io/s/gifted-bird-go7vs
+Kiedy CloudFront może nam się przydać:
 
-![](https://img.ifunny.co/images/abc5076a024122ffa0174065886821b15a905856dc6595619db482812e531d2f_1.webp)
+- Przyspieszenie dostarczania statycznych zawartości strony (wszelkie assety)
+- Chcemy serwować prywatne treści, np. korporacyjne dostępne tylko dla ludzi zalogowanych do VPN(np. poprzez ograniczenie IP Lambda @Edge, AWS WAF)
+- Wprowadzenie customowych stron np. dla poszczególnych kodów błędów HTTP lub gdy wykonywany jest maintance strony
+- live streaming, np. twitch.tv
 
 linki:
-- https://chrome.google.com/webstore/detail/apollo-client-devtools/jdkknkkbebbapilgoeccciglkfbmbnfm/ Apollo Devtools
+- https://rohan6820.medium.com/aws-case-study-twitch-324ecf8288aa
+- https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/IntroductionUseCases.html
 
 ----
 
@@ -196,35 +176,33 @@ i najlepiej radzi sobie `openapi-to-graphql`
 ### Ad. 7. Podsumowanie
 
 
+#### Wady braku posiadania CDN
+
+- częste zapytania obciążające zasoby obliczeniowe, pamięciowe servera, bazy danych
+- spora odległość od klientów, długie czasy oczekiwania
+- może doprowadzić do strat wizerunkowych i finansowych związanych z niedotrzymaniem SLA, czyli Service Level Agreement – umowa o gwarantowanym poziomie świadczenia usług.
+
+#### Kiedy warto stosować CDN?
+
+- często odwiedzane strony internetowe
+  - o zasięgu ogólnopolskim
+  - wielojęzyczne/z zagranicznym ruchem
+  - sklepy internetowe
+- strony z dużą ilością plików, assetów, zdjęć, filmów, itd.
+- strony narażone na ataki 
+   – popularne
+   - zarabiające serwisy
+   -  przechowujące cenne dane
+- każda inna dowolna strona WWW, która z pewnych powodów ma być szybsza i mieć w 100% profesjonalną architekturę
+
 #### Dlaczego warto użyc CloudFront?
 
 - Szybkość i niezawodność w dostarczaniu treści do klientów
 - Bezpieczeństwo
 - Głęboka i łatwa integracja z ekosystemem AWS
-- Wygodna konfiguracja za pomocą API/SDK/narzędzi IaC np. Terraform, Serverless framework
+- Wygodna konfiguracja za pomocą API/SDK/narzędzi Infrastructure as a Code(IaC) np. Terraform, Serverless framework, AWS SAM
 - Przetwarzanie żądań i odpowiedzi @Edge za pomocą kodu AWS Lambda Edge Functions, CloudFront Functions
 - Metryki i logi dostępne w czasie rzeczywistym (CloudTrail, CloudWatch)
-
-#### Wady i zalety Generatorów
-
-*Pros*
-- Kontrakt API to źródło prawdy dla aplikacji na froncie
-- Poprawne typy
-- Uderzamy do właściwych endpointów API
-- Używamy prawidłowych parametrów
-- Jeśli gdzieś jest błąd to najpewniej na backendzie
-- Z łatwością interpretujemy response requestu
-- Z łatwością jesteśmy w stanie zweryfikować zmiany, które nastąpiły w API
-- [typescript] Błędy w czasie kompilacji kodu, a nie w runtime
-- Oszczędność czasu, nie musimy się martwić refactorem, martwym kodem, naprawą błędów, niepoprawnymi typami
-- Mamy świadomość, że nasz codebase, a przynajmniej codebase naszego API jest niezawodny :)
-
-*Cons*
-- Raczej dla małych teamów 
-  - Konieczność przeładowania/ponownej generacji typów i clienta http przy zmianie kontraktu przez backend
-- Może być uciążliwe dla dużych zespołów
-  - [solution] Paczka z typami i clientem mogłaby być wystawiana zaraz obok nowej wersji backendu (integracja CI/CD)
-
 
 #### Do poczytania / Linki
 
