@@ -38,6 +38,15 @@ Problem może się pojawić, kiedy strona zyska na popularności. Klienci z sąs
 ![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-region-specific.png)
 *źródło https://gtmetrix.com*
 
+![](cloudfround-edge-locations-1.png)
+
+
+Jeśli chcemy zwiększyć cache hit ratio/współczynnik trafień to możemy na naszej dystrybucji włączyć opcję **Origin Shield**.
+Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej.
+
+![](cloudfround-edge-locations-2.png)
+
+
 #### Integracje CF
 
 - [Amazon Lambda](https://aws.amazon.com/lambda/) umożliwia tzw. przetwarzanie bezserwerowe(serverless computing), uruchamianie kodu aplikacji bez konieczności samodzielnego zarządzania serwerem 
@@ -46,8 +55,8 @@ Problem może się pojawić, kiedy strona zyska na popularności. Klienci z sąs
 - [Amazon Route 53](https://aws.amazon.com/route53/) Serwis DNS, umożliwia przypisanie alternatywnych domen do Dystrybucji CF przy użyciu aliasu
 - [Amazon Simple Storage Service (S3)](https://aws.amazon.com/s3/) serwis do przechowywania plików, możemy wskazać bucket s3 jako jeden z originów naszej Dystrybucji CF
 - [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) umożliwia dodanie certyfikatu SSL do Dystrybucji CF i powiązanie go z nasza domeną.
-- [AWS Shield](https://aws.amazon.com/shield/)
-- [AWS Web Application Firewall (WAF)](https://aws.amazon.com/waf/)
+- [AWS Shield](https://aws.amazon.com/shield/) Ochrona przed DDoS, ochrona warstwy infrastruktury przeciwko atakom modelu OSI 3 i 4 (sieci, transportowa)
+- [AWS Web Application Firewall (WAF)](https://aws.amazon.com/waf/) ochrona warstwy aplikacji OSI 6 i 7
 
 ![](integracje-cf.png)
 
@@ -66,13 +75,18 @@ linki:
 
 ### Ad 4. Konfiguracja Dystrybucji CF
 
-todo
+Dystrybucja - kontener na wszelkie parametry CF, składająca się z:
+- Origins - serwery źródłowe z których serwujemy treści
+- Behaviours - konfiguracja zachowania się cache'a dla określonej ścieżki HTTP, może to być wildcard
+- Error pages - ustawienia obsługi stron błędów
+- Restrictions - mechanizm dodatkowych ograniczeń
 
 ### Ad 5. Przykładowe use-casy
 
 Kiedy CloudFront może nam się przydać:
 
 - Przyspieszenie dostarczania statycznych zawartości strony (wszelkie assety), np. nie strzelamy po plik do origina (bucket S3) bezpośrednio, a serwujemy zcachowaną wersję pliku z naszego Edge Location
+- Szyfrowanie wrażliwych danych formularzy tj. dane osobowe, czy karty płatniczej
 - Chcemy serwować prywatne treści, np. korporacyjne dostępne tylko dla ludzi zalogowanych do VPN(np. poprzez ograniczenie IP Lambda @Edge, AWS WAF)
 - Wprowadzenie customowych stron np. dla poszczególnych kodów błędów HTTP lub gdy wykonywany jest maintance strony
 - serwowanie video, live streaming, np. twitch.tv
