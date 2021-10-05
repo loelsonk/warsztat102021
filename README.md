@@ -32,11 +32,21 @@ Problem może się pojawić, kiedy strona zyska na popularności. Klienci z sąs
 
 #### CDN/CloudFront rozwiązuje ten problem w taki oto sposób:
 
+Klienci łączą się do strony za pomocą węzłów, które są najbliżej nich. W efekcie strona działa szybko w każdym miejscu na ziemi.
+Skrócenie geograficznej drogi połączenia to tylko jedna z wielu technik jaką sieci CDN przyspieszają i usprawniają transmisję statycznych plików.
+
 ![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-example.png)
-*źródło https://gtmetrix.com*
+
+Czyli w uproszczeniu, ruch do serwera:
+
+No cdn: Zanim nasze pakiety dotrą do serwera docelowego to są one przekazywane przez wiele urządzeń sieciowych i sieci różnych operatorów internetowych. Każde takie przejście wprowadza pewne opóźnienia, a dodatkowo nie mamy pewności, że kolejne pakiety będą szły i wracały tą samą drogą.
+
+CDN (CloudFront):
+
+Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Location(Node/Edge Server), a następnie ich dalszy transfer do regionu AWS już po sieci szkieletowej Amazonu. Dzięki czemu opóźnienia są zmniejszone, a transmisja bardziej przewidywalna/stabilna.
 
 ![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-region-specific.png)
-*źródło https://gtmetrix.com*
+
 
 ![](cloudfround-edge-locations-1.png)
 
