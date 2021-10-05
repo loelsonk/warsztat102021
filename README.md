@@ -24,18 +24,29 @@ Agenda
 1. [Demo, serwowanie assetów na przykładzie sitemap](#ad-6-demo-serwowanie-asset%C3%B3w-na-przyk%C5%82adzie-sitemap)
 1. [Podsumowanie](#ad-7-podsumowanie)
    
+   
+   1. opowiedziec na wstepie, czym jest CF
+   2. dokładniej przedstawić problem
 ----
 
 ### Ad 1. Wprowadzenie do CloudFront
 
 Czym jest CF wg dokumentacji w wolnym tłumaczeniu
 
-> Amazon CloudFront to rozproszony system dostarczania treści (CDN), która bezpiecznie dostarcza dane, filmy, aplikacje i interfejsy API klientom na całym świecie z niewielkimi opóźnieniami i wysokimi prędkościami transferu, a wszystko to w środowisku przyjaznym dla programistów.
+> Amazon CloudFront to rozproszony system dostarczania treści (CDN), który bezpiecznie dostarcza dane, filmy, aplikacje i interfejsy API klientom na całym świecie z niewielkimi opóźnieniami i wysokimi prędkościami transferu, a wszystko to w środowisku przyjaznym dla programistów.
 
-#### Ok, ale czym jest CDN?
+#### Problem z którym CloudFront może nam pomóc
+
+Załóżmy, że mamy stronę internetową zainstalowaną na polskim hostingu, np. może być to datacenter w Warszawie.
+
+- częste zapytania obciążające zasoby obliczeniowe, pamięciowe servera, bazy danych
+- spora odległość od klientów, długie czasy oczekiwania
+- może doprowadzić do strat wizerunkowych i finansowych związanych z niedotrzymaniem SLA, czyli Service Level Agreement – umowa o gwarantowanym poziomie świadczenia usług.
 
 ![](single-server-1.png)
 ![](single-server-2.png)
+
+#### Ok, ale czym jest CDN?
 
 #### Integracje CF
 
@@ -192,7 +203,7 @@ i najlepiej radzi sobie `openapi-to-graphql`
 - Głęboka i łatwa integracja z ekosystemem AWS
 - Wygodna konfiguracja za pomocą API/SDK/narzędzi IaC np. Terraform, Serverless framework
 - Przetwarzanie żądań i odpowiedzi @Edge za pomocą kodu AWS Lambda Edge Functions, CloudFront Functions
-- Metryki i logi dostępne w czasie rzeczywistym
+- Metryki i logi dostępne w czasie rzeczywistym (CloudTrail, CloudWatch)
 
 #### Wady i zalety Generatorów
 
@@ -217,12 +228,7 @@ i najlepiej radzi sobie `openapi-to-graphql`
 
 #### Do poczytania / Linki
 
-- https://react-typescript-cheatsheet.netlify.app
-- https://blog.pragmatists.com/generating-a-typescript-api-client-541109422c40
-- https://dev.to/wkrueger/integrating-apis-to-a-typescript-frontend-with-openapi-swagger-3521
-- https://the-guild.dev/blog/whats-new-in-graphql-codegen-v2
-- https://openapi-generator.tech/
-- https://tsed.io/
+- https://www.youtube.com/watch?v=16CShhniGcA
 
 ![](https://i.imgur.com/RrzBX7A.png)
 
