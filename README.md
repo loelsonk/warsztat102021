@@ -39,11 +39,11 @@ Skrócenie geograficznej drogi połączenia to tylko jedna z wielu technik jaką
 
 Czyli w uproszczeniu, ruch do serwera:
 
-No cdn: Zanim nasze pakiety dotrą do serwera docelowego to są one przekazywane przez wiele urządzeń sieciowych i sieci różnych operatorów internetowych. Każde takie przejście wprowadza pewne opóźnienia, a dodatkowo nie mamy pewności, że kolejne pakiety będą szły i wracały tą samą drogą.
+No CDN: Zanim nasze pakiety dotrą do serwera docelowego są one przekazywane przez wiele urządzeń sieciowych i sieci różnych operatorów internetowych. Każde takie przejście wprowadza pewne opóźnienia.
 
 CDN (CloudFront):
 
-Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Location(Node/Edge Server), a następnie ich dalszy transfer do regionu AWS już po sieci szkieletowej Amazonu. Dzięki czemu opóźnienia są zmniejszone, a transmisja bardziej przewidywalna/stabilna.
+Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Location(Node/Edge Server), wtedy już ich dalszy transfer leci po sieci szkieletowej Amazonu. Dzięki czemu opóźnienia są minimalne.
 
 ![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-region-specific.png)
 
