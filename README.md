@@ -91,7 +91,6 @@ Lambda@Edge umożliwia przechwytywanie requestów HTTP przechodzących przez Clo
 Naszą lambdę podpinamy pod 1 z 4 triggerów
 
 - Viewer Request – lambda wykonuje się, kiedy CloudFront otrzyma request i zanim sprawdzi, czy obiekt znajduje się Cache
-- The function executes when CloudFront receives a request from a viewer and before it checks to see whether the requested object is in the edge cache
 - Origin Request - lambda wykonuje się, kiedy CloudFront forwarduje request do Origina, czyli kiedy requestowany obiekt znajduje się w cache, lambda nie wykonuje się
 - Origin Response - lambda wykonuje się, kiedy CloudFront otrzyma response z origina i zanim zapisze obiekt w cache na Edge Location
 - Viewer Response - lambda wykonuje się przed zwróceniem response z obiektem i niezależnie, czy obiekt jest w cache, czy nie.
