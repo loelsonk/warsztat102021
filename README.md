@@ -1,4 +1,4 @@
-## AWS CloudFront w praktyce
+## Amazon CloudFront w praktyce
 
 ![](https://miro.medium.com/max/1400/0*5zpkNFoKi9tBRkKH.png)
 
