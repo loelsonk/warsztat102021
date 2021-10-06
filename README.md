@@ -5,11 +5,11 @@
 ### Agenda
 
 1. [Wprowadzenie do CloudFront](#ad-1-wprowadzenie-do-cloudfront)
-1. [Lambda Edge Functions](#ad-3-lambda-edge-functions)
-1. [Konfiguracja Dystrybucji CF](#ad-4-konfiguracja-dystrybucji-cf)
-1. [Przykładowe use-casy](#ad-5-przyk%C5%82adowe-use-casy)
-1. [Demo, serwowanie assetów na przykładzie sitemap](#ad-6-demo-serwowanie-asset%C3%B3w-na-przyk%C5%82adzie-sitemap)
-1. [Podsumowanie](#ad-7-podsumowanie)
+1. [Lambda Edge Functions](#ad-2-lambda-edge-functions)
+1. [Konfiguracja Dystrybucji CF](#ad-3-konfiguracja-dystrybucji-cf)
+1. [Przykładowe use-casy](#ad-4-przyk%C5%82adowe-use-casy)
+1. [Demo, serwowanie assetów na przykładzie sitemap](#ad-5-demo-serwowanie-asset%C3%B3w-na-przyk%C5%82adzie-sitemap)
+1. [Podsumowanie](#ad-6-podsumowanie)
 ----
 
 ### Ad 1. Wprowadzenie do CloudFront
