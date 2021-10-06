@@ -78,7 +78,15 @@ Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej. Znacz
 
 ### Ad 2. Lambda Edge Functions
 
-todo
+Lambda@Edge umożliwia przechwytywanie requestów HTTP przechodzących przez CloudFront. Lambdy działają @Edge(w Edge Locations), czyli "blisko użytkownika", co przyspiesza reagowanie i działanie na treści podczas przesyłania.
+
+- Ze względu na ograniczenia, lambdy@edge tworzymy w regionie (N. Virginia) us-east-1.
+- Lambdę@Edge przypisujemy do konkretnego Behavioura naszej Dystrybucji CF
+- Po zapisaniu zmian konfiguracji, Lambdy@Edge są deployowane na każdy Edge Location (tworzone są repliki)
+
+Funkcje te działają w lokalizacjach CloudFront Edge bliżej użytkownika, co przyspiesza reagowanie lub działanie na treści podczas przesyłania. 
+
+![](https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2018/02/01/1.png)
 
 ![](https://images.ctfassets.net/9gzi1io5uqx8/mdGKV0XGOGjyr23h3ExMP/99f70f024f70f9856af20e300aea7a03/cloudfront-function-and-lambda-edge-2.png?fit=scale&w=825)
 
