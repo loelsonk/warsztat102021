@@ -84,8 +84,6 @@ Lambda@Edge umożliwia przechwytywanie requestów HTTP przechodzących przez Clo
 - Lambdę@Edge przypisujemy do konkretnego Behavioura naszej Dystrybucji CF
 - Po zapisaniu zmian konfiguracji, Lambdy@Edge są deployowane na każdy Edge Location (tworzone są repliki)
 
-Funkcje te działają w lokalizacjach CloudFront Edge bliżej użytkownika, co przyspiesza reagowanie lub działanie na treści podczas przesyłania. 
-
 ![](https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2018/02/01/1.png)
 
 #### Triggery Lambda@Edge
