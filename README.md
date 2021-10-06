@@ -121,11 +121,24 @@ linki:
 
 ### Ad 5. Demo, serwowanie assetów na przykładzie sitemap
 
-todo
+todo obrazki i komendy
+
+1. Logujemy się do Dashboardu AWS
+1. Tworzymy bucket w us-east-1 (N. Virginia)
+1. Za pomocą AWS SDK/CLI uploadujemy pliki na stworzony bucket (cały katalog assets)
+1. Dodajemy Lambdę Edge, origin-request
+1. Tworzymy nową Dystrybucję CF, podpinamy origin s3, dodajemy behaviour pattern
+  - podpinamy origin s3
+  - dodajemy behaviour pattern
+  - pod nasz behaviour podpinamy lambdę Edge
+1. Zapisujemy zmiany, czekamy na propagację zmian na Edge Locations
+
 
 ----
 
 ### Ad. 6. Podsumowanie
+
+Produkcyjne Dystrybucje CF powinny być wdrażane w postaci Infrastruktury jako kodu, np. szablonu CloudFormation.
 
 
 #### Wady braku posiadania CDN
