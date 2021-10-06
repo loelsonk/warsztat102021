@@ -23,13 +23,13 @@ Czym jest CF wg dokumentacji w wolnym tłumaczeniu
 Załóżmy, że mamy stronę internetową zainstalowaną na polskim hostingu, np. może być to datacenter w Warszawie.
 Wszyscy są zadowoleni. Strona działa szybko bez opóźnień, hosting nie jest obciążony zapytaniami.
 
-![](single-server-1.png)
+![](images/single-server-1.png)
 
 Problem może się pojawić, kiedy strona zyska na popularności. Klienci z sąsiednich krajów czują opóźnienie ale mogą w miarę skutecznie poruszać się po stronie, natomiast w bardziej odległych zakątkach świata na wyświetlenie strony czekamy kilka sekund.
 
 Dlaczego tak się dzieje? Zanim nasze pakiety dotrą do serwera docelowego są one przekazywane przez wiele urządzeń sieciowych i sieci różnych operatorów internetowych. Każde takie przejście wprowadza pewne opóźnienia.
 
-![](single-server-2.png)
+![](images/single-server-2.png)
 
 #### CDN/CloudFront rozwiązuje ten problem w taki oto sposób:
 
@@ -37,7 +37,7 @@ Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Lo
 
 ![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-region-specific.png)
 
-*źródło: gtmetrix.com/*
+*źródło: gtmetrix.com*
 
 #### Krótko o mechanizmie działania
 
@@ -49,7 +49,7 @@ Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Lo
 1. Finalnie jeśli plik/obiekt nie znajduje się w żadnym z w.w. cache to request trafia do serwera źródłowego. Serwer generuje response, który jest przekazywany przez CloudFront(request HTTP przyp.). Dodatkowo odpowiedź jest zapisywana w cache na *Edge Location*
 1. Kolejne podobne requesty z tego Edge Location będą zwracały wyniki z cache.
 
-![](cloudfround-edge-locations-1.png)
+![](images/cloudfround-edge-locations-1.png)
 
 Różnica między Regional Edge Cache, a Edge Location.
 - w Edge Location przechowywane są najczęściej pobierane obiekty
@@ -58,7 +58,7 @@ Różnica między Regional Edge Cache, a Edge Location.
 Jeśli chcemy zwiększyć cache hit ratio/współczynnik trafień to możemy na naszej dystrybucji włączyć opcję **Origin Shield**.
 Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej. Znacznie ogranicza wtedy requesty do samego Origina.
 
-![](cloudfround-edge-locations-2.png)
+![](images/cloudfround-edge-locations-2.png)
 
 
 #### Integracje CF
@@ -72,7 +72,7 @@ Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej. Znacz
 - [AWS Shield](https://aws.amazon.com/shield/) Ochrona przed DDoS, ochrona warstwy infrastruktury przeciwko atakom modelu OSI 3 i 4 (sieci, transportowa)
 - [AWS Web Application Firewall (WAF)](https://aws.amazon.com/waf/) ochrona warstwy aplikacji OSI 6 i 7
 
-![](integracje-cf.png)
+![](images/integracje-cf.png)
 
 ----
 
@@ -88,17 +88,66 @@ Lambda@Edge umożliwia przechwytywanie requestów HTTP przechodzących przez Clo
 
 #### Triggery Lambda@Edge
 
+![](https://images.ctfassets.net/9gzi1io5uqx8/5A4pz0td6llG3XkLwkJdrk/8b130e8a7093f1e92f59aa4f7cc433ba/cloudfront-functions-where.png?fit=scale&w=825)
+
 Naszą lambdę podpinamy pod 1 z 4 triggerów
 
-- Viewer Request – lambda wykonuje się, kiedy CloudFront otrzyma request i zanim sprawdzi, czy obiekt znajduje się Cache
-- Origin Request - lambda wykonuje się, kiedy CloudFront forwarduje request do Origina, czyli kiedy requestowany obiekt znajduje się w cache, lambda nie wykonuje się
-- Origin Response - lambda wykonuje się, kiedy CloudFront otrzyma response z origina i zanim zapisze obiekt w cache na Edge Location
-- Viewer Response - lambda wykonuje się przed zwróceniem response z obiektem i niezależnie, czy obiekt jest w cache, czy nie.
+- Viewer-Request – lambda wykonuje się, kiedy CloudFront otrzyma request i zanim sprawdzi, czy obiekt znajduje się Cache
+- Origin-Request - lambda wykonuje się, kiedy CloudFront forwarduje request do Origina, czyli kiedy requestowany obiekt znajduje się w cache, lambda nie wykonuje się
+- Origin-Response - lambda wykonuje się, kiedy CloudFront otrzyma response z origina i zanim zapisze obiekt w cache na Edge Location
+- Viewer-Response - lambda wykonuje się przed zwróceniem response z obiektem i niezależnie, czy obiekt jest w cache, czy nie.
 
 ![](https://images.ctfassets.net/9gzi1io5uqx8/mdGKV0XGOGjyr23h3ExMP/99f70f024f70f9856af20e300aea7a03/cloudfront-function-and-lambda-edge-2.png?fit=scale&w=825)
 
 #### Use casy:
-todo, jeśli będzie czas
+- Dynamiczne generowanie customowego contentu na podstawie requestu, np. generowanie obrazków o konkretnych wymiarach, ?width=100&height=100 ląduje wtedy w cache jako klucz
+- Dodawanie logiki do requestów i responsów, np. tworzenie pretty urls
+- Możemy też zwiększyć cache hit ratio, manipulując zwrotką lambdy, aby kierowała na wynik w cache
+- Customowe uwierzytelnianie i autoryzacja
+
+#### Przykładowy kod Viewer-Request Lambda@Edge
+
+Sprawdzany jest cookie, na jego podstawie jeśli nie jesteśmy uwierzytelnieni zostajemy redirectowani
+
+```javascript
+exports.handler = (event, context, callback) => {
+    const request = event.Records[0].cf.request;
+    /* check whether is user is authenticated */
+    const authenticated = parseAndCheckCookie(request.headers);
+
+    if (authenticated) {
+        /* This is an authenticated client and we just want to continue 
+         * processing their request. To do that we return the request object.
+         */
+        callback(null, request);
+        return;
+    }
+
+    /* Generate HTTP temporary redirect response for anonymous users 
+     * using 302 status code with URL to the Sign In/Register page.
+     */
+    const redirectResponse = {
+        status: '302',
+        statusDescription: 'Found',
+        headers: {
+            'location': [{
+                key: 'Location',
+                value: '/signin',
+            }],
+            'cache-control': [{
+                key: 'Cache-Control',
+                value: "private"
+            }],
+        },
+    };
+
+    /* We want to redirect this client to the signin page and 
+     * we do so by returning the redirect response generated 
+     * inside the function
+     */
+    callback(null, redirectResponse);
+};
+```
 
 linki:
 - https://www.sentiatechblog.com/cloudfront-functions-and-lambda-edge-compared
@@ -135,22 +184,69 @@ linki:
 todo obrazki i komendy
 
 1. Logujemy się do Dashboardu AWS
-1. Tworzymy bucket w us-east-1 (N. Virginia)
-1. Za pomocą AWS SDK/CLI uploadujemy pliki na stworzony bucket (cały katalog assets)
-1. Dodajemy Lambdę Edge, origin-request
-1. Tworzymy nową Dystrybucję CF, podpinamy origin s3, dodajemy behaviour pattern
-  - podpinamy origin s3
-  - dodajemy behaviour pattern
+2. Tworzymy buckety w `us-east-1 (N. Virginia)`, do celów demo, stworzymy dwa originy s3
+  - jeden do serwowania index route dla naszej aplikacji, będzie to domyślny build `create-react-app`
+  - drugi do serwowania plików *.xml sitemap pod zmyślonym routem
+
+3. Za pomocą AWS SDK/CLI uploadujemy pliki na stworzony bucket (cały katalog assets)
+```
+aws s3 cp demo-buckets/my-awesome-app s3://my-awesome-app-x293e --recursive
+aws s3 cp demo-buckets/assets s3://my-awesome-assets-x293e --recursive
+```
+4. Dodajemy Lambdy Edge
+
+origin-request
+```javascript
+const path = require('path');
+
+const debug = (reference, message) => console.log(
+    `SITEMAP ORIGIN-REQUEST REF: ${reference} INFO: ${message}`
+);
+
+module.exports.handler = (event, context, callback) => {
+    const request = event.Records[0].cf.request;
+
+    debug(request.uri, `Request uri`);
+
+    const fileName = path.basename(request.uri);
+
+    if (!fileName.endsWith('.xml')) {
+        debug(fileName, 'Requested file is not *.xml file');
+
+        return callback(null, request);
+    }
+
+    debug(fileName, `Requested sitemap file`);
+
+    request.uri = `/sitemap/${fileName}`;
+
+    return callback(null, request);
+};
+
+```
+origin-response
+```javascript
+exports.handler = (event, context, callback) => {
+  const response = event.Records[0].cf.response;
+  response.headers['content-type'] = [{ key:'Content-Type', value: 'text/xml' }];
+
+  return callback(null, response);
+};
+
+```
+5. Tworzymy nową Dystrybucję CF
+  - podpinamy utworzone originy
+  - dodajemy behaviour pattern dla naszego origina z sitemapami
   - pod nasz behaviour podpinamy lambdę Edge
 1. Zapisujemy zmiany, czekamy na propagację zmian na Edge Locations
 
-
+linki:
+- https://www.youtube.com/watch?v=16CShhniGcA
 ----
 
 ### Ad. 6. Podsumowanie
 
 Produkcyjne Dystrybucje CF powinny być wdrażane w postaci Infrastruktury jako kodu, np. szablonu CloudFormation.
-
 
 #### Wady braku posiadania CDN
 
@@ -171,7 +267,7 @@ Produkcyjne Dystrybucje CF powinny być wdrażane w postaci Infrastruktury jako 
    - przechowujące cenne dane
 - każda inna dowolna strona WWW, która z pewnych powodów ma być szybsza i mieć w 100% profesjonalną architekturę
 
-#### Dlaczego warto użyc CloudFront?
+#### Dlaczego warto użyć CloudFront?
 
 - Szybkość i niezawodność w dostarczaniu treści do klientów (230+ edge locations)
 - Bezpieczeństwo
@@ -186,9 +282,9 @@ Produkcyjne Dystrybucje CF powinny być wdrażane w postaci Infrastruktury jako 
 
 #### Do poczytania / Linki
 
-- https://www.youtube.com/watch?v=16CShhniGcA
 - https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CloudFrontPricing.html
 - https://aws.amazon.com/cloudfront/faqs/
+- https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/origin-shield.html
 
 ![](https://i.imgur.com/RrzBX7A.png)
 

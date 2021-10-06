@@ -1,0 +1,2 @@
+aws s3 cp demo-buckets/my-awesome-app s3://my-awesome-app-1337x --recursive
+aws s3 cp demo-buckets/assets s3://my-awesome-assets-1337x --recursive
