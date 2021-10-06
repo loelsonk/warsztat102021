@@ -76,7 +76,7 @@ Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej. Znacz
 
 ----
 
-### Ad 3. Lambda Edge Functions
+### Ad 2. Lambda Edge Functions
 
 todo
 
@@ -87,7 +87,7 @@ linki:
 
 ----
 
-### Ad 4. Konfiguracja Dystrybucji CF
+### Ad 3. Konfiguracja Dystrybucji CF
 
 Dystrybucja - kontener na wszelkie parametry CF, składająca się z:
 - Origins - serwery źródłowe z których serwujemy treści
@@ -95,7 +95,7 @@ Dystrybucja - kontener na wszelkie parametry CF, składająca się z:
 - Error pages - ustawienia obsługi stron błędów
 - Restrictions - mechanizm dodatkowych ograniczeń
 
-### Ad 5. Przykładowe use-casy
+### Ad 4. Przykładowe use-casy
 
 Kiedy CloudFront może nam się przydać:
 
@@ -111,13 +111,13 @@ linki:
 
 ----
 
-### Ad 6. Demo, serwowanie assetów na przykładzie sitemap
+### Ad 5. Demo, serwowanie assetów na przykładzie sitemap
 
 todo
 
 ----
 
-### Ad. 7. Podsumowanie
+### Ad. 6. Podsumowanie
 
 
 #### Wady braku posiadania CDN
