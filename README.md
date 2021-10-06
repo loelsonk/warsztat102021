@@ -88,10 +88,24 @@ Funkcje te działają w lokalizacjach CloudFront Edge bliżej użytkownika, co p
 
 ![](https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2018/02/01/1.png)
 
+#### Triggery Lambda@Edge
+
+Naszą lambdę podpinamy pod 1 z 4 triggerów
+
+- Viewer Request – lambda wykonuje się, kiedy CloudFront otrzyma request i zanim sprawdzi, czy obiekt znajduje się Cache
+- The function executes when CloudFront receives a request from a viewer and before it checks to see whether the requested object is in the edge cache
+- Origin Request - lambda wykonuje się, kiedy CloudFront forwarduje request do Origina, czyli kiedy requestowany obiekt znajduje się w cache, lambda nie wykonuje się
+- Origin Response - lambda wykonuje się, kiedy CloudFront otrzyma response z origina i zanim zapisze obiekt w cache na Edge Location
+- Viewer Response - lambda wykonuje się przed zwróceniem response z obiektem i niezależnie, czy obiekt jest w cache, czy nie.
+
 ![](https://images.ctfassets.net/9gzi1io5uqx8/mdGKV0XGOGjyr23h3ExMP/99f70f024f70f9856af20e300aea7a03/cloudfront-function-and-lambda-edge-2.png?fit=scale&w=825)
+
+#### Use casy:
+todo, jeśli będzie czas
 
 linki:
 - https://www.sentiatechblog.com/cloudfront-functions-and-lambda-edge-compared
+- https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-how-it-works.html
 
 ----
 
