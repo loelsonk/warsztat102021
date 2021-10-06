@@ -37,12 +37,26 @@ Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Lo
 
 ![](https://gtmetrix.com/blog/wp-content/uploads/2017/02/cdn-region-specific.png)
 
+*źródło: gtmetrix.com/*
+
+#### Krótko o mechanizmie działania
+
+1. Użytkownik wysyła przez aplikację request HTTP
+1. Url requestu jest skonstruowany np. ze ścieżki i query stringa, który stanowi klucz obiektu w pamięci poręcznej/cache
+1. CloudFront sprawdza po odebraniu requestu, czy taki obiekt (o takim kluczu) znajduje się w cache **Edge Location**. Jeśli hit to jest zwracany. return;
+1. Jeśli obiektu nie ma w Edge Location, wtedy request jest przekazywany do kolejnej warstwy **Regional Edge Cache**. Jeśli hit to jest zwracany. return;
+1. Jeśli obiektu nie ma w Regional Edge Cache, wtedy request jest przekazywany do opcjonalnej warstwy **Origin Shield**. Jeśli hit to jest zwracany. return;
+1. Finalnie jeśli plik/obiekt nie znajduje się w żadnym z w.w. cache to request trafia do serwera źródłowego. Serwer generuje response, który jest przekazywany przez CloudFront(request HTTP przyp.). Dodatkowo odpowiedź jest zapisywana w cache na *Edge Location*
+1. Kolejne podobne requesty z tego Edge Location będą zwracały wyniki z cache.
 
 ![](cloudfround-edge-locations-1.png)
 
+Różnica między Regional Edge Cache, a Edge Location.
+- w Edge Location przechowywane są najczęściej pobierane obiekty
+- Z czasem z Edge Location mniej popularne obiekty są z niego usuwane i trafiają do Regional Edge Cache
 
 Jeśli chcemy zwiększyć cache hit ratio/współczynnik trafień to możemy na naszej dystrybucji włączyć opcję **Origin Shield**.
-Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej.
+Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej. Znacznie ogranicza wtedy requesty do samego Origina.
 
 ![](cloudfround-edge-locations-2.png)
 
