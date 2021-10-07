@@ -1,12 +1,11 @@
-my-awesome-app-a123b
-my-awesome-assets-a123b
+my-awesome-app-8xifcu9
+my-awesome-assets-8xifcu9
 
-TestOrginRequestLambdaEdgeFunction
 MyAwesomeOriginRequestLambdaEdgeFunction
 
-aws s3 cp demo-buckets/my-awesome-app s3://my-awesome-app-a123b --recursive
-aws s3 cp demo-buckets/assets s3://my-awesome-assets-a123b --recursive
+aws s3 cp demo-buckets/my-awesome-app s3://my-awesome-app-8xifcu9 --recursive
+aws s3 cp demo-buckets/assets s3://my-awesome-assets-8xifcu9 --recursive
 
 /my/super/secret/sitemap/path/*.xml
 
-arn:aws:lambda:us-east-1:194578216039:function:OriginEdgeFunction2:1
+arn:aws:lambda:us-east-1:194578216039:function:OriginEdgeFunction2:1zny

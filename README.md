@@ -172,9 +172,19 @@ linki:
 
 Dystrybucja - kontener na wszelkie parametry CF, składająca się z:
 - Origins - serwery źródłowe z których serwujemy treści
-- Behaviours - konfiguracja zachowania się cache'a dla określonej ścieżki HTTP, może to być wildcard
+  - S3
+  - Publiczna końcówka Load Balancera
+  - EC2 (VM)
+- Behaviours - konfiguracja zachowania się cache'a dla określonej ścieżki HTTP
+  - określamy path pattern - wzorzec ścieżki, może to być wildcard
+  - określamy origin, źródło treści
+  - cache policy
+    - elementy klucza w cache, np. na podstawie headerów, cookies, query-strings
+    - czas życia TTL
+  - metody HTTP
+  - kompresja gzip lub brotli
 - Error pages - ustawienia obsługi stron błędów
-- Restrictions - mechanizm dodatkowych ograniczeń
+- Restrictions - mechanizm dodatkowych ograniczeń, np. możemy ograniczyć ruch dla poszczególnych krajów
 
 ### Ad 4. Przykładowe use-casy
 
