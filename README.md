@@ -245,6 +245,7 @@ module.exports.handler = (event, context, callback) => {
 
     return callback(null, request);
 };
+```
 
 5. Tworzymy nową Dystrybucję CF
   - podpinamy utworzone originy
