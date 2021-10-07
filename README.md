@@ -39,6 +39,8 @@ Przekierowuje pakiety do najbardziej optymalnego pod względem sieciowym Edge Lo
 
 *źródło: gtmetrix.com*
 
+![](https://d1.awsstatic.com/global-infrastructure/maps/Cloudfront-Map_5.18.2021.aa21671b133fd3abd94ff6b8150b515cfe55aaed.png)
+
 #### Krótko o mechanizmie działania
 
 1. Użytkownik wysyła przez aplikację request HTTP
@@ -59,7 +61,6 @@ Jeśli chcemy zwiększyć cache hit ratio/współczynnik trafień to możemy na 
 Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej. Znacznie ogranicza wtedy requesty do samego Origina.
 
 ![](images/cloudfround-edge-locations-2.png)
-
 
 #### Integracje CF
 
@@ -205,7 +206,7 @@ todo obrazki i komendy
 aws s3 cp demo-buckets/my-awesome-app s3://my-awesome-app-x293e --recursive
 aws s3 cp demo-buckets/assets s3://my-awesome-assets-x293e --recursive
 ```
-4. Dodajemy Lambdy Edge
+4. Dodajemy Lambdę Edge
 
 origin-request
 ```javascript
@@ -235,17 +236,6 @@ module.exports.handler = (event, context, callback) => {
     return callback(null, request);
 };
 
-```
-origin-response
-```javascript
-exports.handler = (event, context, callback) => {
-  const response = event.Records[0].cf.response;
-  response.headers['content-type'] = [{ key:'Content-Type', value: 'text/xml' }];
-
-  return callback(null, response);
-};
-
-```
 5. Tworzymy nową Dystrybucję CF
   - podpinamy utworzone originy
   - dodajemy behaviour pattern dla naszego origina z sitemapami
