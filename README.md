@@ -80,15 +80,16 @@ Pełni funkcję opcjonalnej, zcentralizowana warstwa pamięci podręcznej. Znacz
 
 Lambda@Edge umożliwia przechwytywanie requestów HTTP przechodzących przez CloudFront. Lambdy działają @Edge(w Edge Locations), czyli "blisko użytkownika", co przyspiesza reagowanie i działanie na treści podczas przesyłania.
 
+![](https://images.ctfassets.net/9gzi1io5uqx8/5A4pz0td6llG3XkLwkJdrk/8b130e8a7093f1e92f59aa4f7cc433ba/cloudfront-functions-where.png?fit=scale&w=825)
+
 - Ze względu na ograniczenia, lambdy@edge tworzymy w regionie (N. Virginia) us-east-1.
 - Lambdę@Edge przypisujemy do konkretnego Behavioura naszej Dystrybucji CF
 - Po zapisaniu zmian konfiguracji, Lambdy@Edge są deployowane na każdy Edge Location (tworzone są repliki)
 
-![](https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2018/02/01/1.png)
 
 #### Triggery Lambda@Edge
 
-![](https://images.ctfassets.net/9gzi1io5uqx8/5A4pz0td6llG3XkLwkJdrk/8b130e8a7093f1e92f59aa4f7cc433ba/cloudfront-functions-where.png?fit=scale&w=825)
+![](https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2018/02/01/1.png)
 
 Naszą lambdę podpinamy pod 1 z 4 triggerów
 
@@ -98,6 +99,17 @@ Naszą lambdę podpinamy pod 1 z 4 triggerów
 - Viewer-Response - lambda wykonuje się przed zwróceniem response z obiektem i niezależnie, czy obiekt jest w cache, czy nie.
 
 ![](https://images.ctfassets.net/9gzi1io5uqx8/mdGKV0XGOGjyr23h3ExMP/99f70f024f70f9856af20e300aea7a03/cloudfront-function-and-lambda-edge-2.png?fit=scale&w=825)
+
+#### Nowość, CloudFront Functions
+
+Ich przeznaczeniem jest transformacja obiektów requestów i responsów, sporo uprawnień zostało wyciętych. 
+Z założenia funkcje te mają być szybsze od tradycyjnych @Edge lambd.
+
+- Nie mamy dostępu do API, brak dostępu do networkingu
+- Tylko dwa triggery Viewer-Request i Viewer-Response, czyli dwa triggery wykonujące się przed i po sprawdzeniu, czy obiekt jest w cache
+- Implementacja bezpośrednio w dashboardzie serwisu CloudFront
+- javascript only, w odróznieniu od @Edge Functions dodatkowo python
+- limit pamięci to 2MB, a wielkość kodu nie może przekraczać 10 kb
 
 #### Use casy:
 - Dynamiczne generowanie customowego contentu na podstawie requestu, np. generowanie obrazków o konkretnych wymiarach, ?width=100&height=100 ląduje wtedy w cache jako klucz
